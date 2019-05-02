@@ -25,4 +25,14 @@ describe('serverless-docstore-example',  () => {
 
       expect(res.data._id).to.eql(expectedId);
     });
+
+    it('should insert and get', async () => {
+      const expectedId = v4();
+      
+      const serverlessUrl = testkit.getUrl('/serverless/docstore-example/resources');
+      await axios.post(`${serverlessUrl}`, {id: expectedId}, {headers: testkit.defaultHeaders});
+      const res = await axios.get(`${serverlessUrl}/${expectedId}`, {headers: testkit.defaultHeaders});
+
+      expect(res.data._id).to.eql(expectedId);
+    });
 });
